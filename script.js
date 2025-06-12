@@ -135,7 +135,10 @@ document.getElementById('petForm').addEventListener('submit', function (e) {
 
   setTimeout(() => {
     const ctx = document.getElementById('macroChart').getContext('2d')
-    if (window.macroChart) window.macroChart.destroy()
+    if (window.macroChart instanceof Chart) {
+  window.macroChart.destroy()
+}
+
     window.macroChart = new Chart(ctx, {
       type: 'pie',
       data: {
