@@ -1,79 +1,8 @@
-const breedData = {
-  dog: [
-    { name: 'Airedale Terrier', idealMin: 18, idealMax: 29, activity: 'moderate', proneToObesity: false },
-    { name: 'Akita', idealMin: 32, idealMax: 59, activity: 'moderate', proneToObesity: true },
-    { name: 'Alaskan Malamute', idealMin: 34, idealMax: 43, activity: 'high', proneToObesity: false },
-    { name: 'Australian Shepherd', idealMin: 16, idealMax: 32, activity: 'high', proneToObesity: false },
-    { name: 'Beagle', idealMin: 9, idealMax: 14, activity: 'moderate', proneToObesity: true },
-    { name: 'Bernese Mountain Dog', idealMin: 35, idealMax: 55, activity: 'moderate', proneToObesity: true },
-    { name: 'Bichon Frise', idealMin: 5, idealMax: 10, activity: 'moderate', proneToObesity: true },
-    { name: 'Border Collie', idealMin: 12, idealMax: 20, activity: 'high', proneToObesity: false },
-    { name: 'Boston Terrier', idealMin: 6, idealMax: 11, activity: 'moderate', proneToObesity: true },
-    { name: 'Boxer', idealMin: 25, idealMax: 32, activity: 'high', proneToObesity: false },
-    { name: 'Bull Terrier', idealMin: 20, idealMax: 35, activity: 'moderate', proneToObesity: true },
-    { name: 'Cavalier King Charles Spaniel', idealMin: 5.5, idealMax: 8.5, activity: 'moderate', proneToObesity: true },
-    { name: 'Chihuahua', idealMin: 1.8, idealMax: 2.7, activity: 'moderate', proneToObesity: true },
-    { name: 'Cocker Spaniel', idealMin: 10, idealMax: 15, activity: 'moderate', proneToObesity: true },
-    { name: 'Dachshund', idealMin: 7, idealMax: 14, activity: 'low', proneToObesity: true },
-    { name: 'Doberman Pinscher', idealMin: 27, idealMax: 45, activity: 'high', proneToObesity: false },
-    { name: 'English Setter', idealMin: 25, idealMax: 36, activity: 'moderate', proneToObesity: false },
-    { name: 'French Bulldog', idealMin: 9, idealMax: 13, activity: 'low', proneToObesity: true },
-    { name: 'German Shepherd', idealMin: 22, idealMax: 40, activity: 'high', proneToObesity: false },
-    { name: 'Golden Retriever', idealMin: 25, idealMax: 34, activity: 'moderate', proneToObesity: true },
-    { name: 'Great Dane', idealMin: 50, idealMax: 80, activity: 'moderate', proneToObesity: false },
-    { name: 'Great Pyrenees', idealMin: 45, idealMax: 60, activity: 'low', proneToObesity: true },
-    { name: 'Greyhound', idealMin: 27, idealMax: 40, activity: 'high', proneToObesity: false },
-    { name: 'Irish Setter', idealMin: 27, idealMax: 32, activity: 'high', proneToObesity: false },
-    { name: 'Labrador Retriever', idealMin: 25, idealMax: 36, activity: 'moderate', proneToObesity: true },
-    { name: 'Mastiff', idealMin: 55, idealMax: 100, activity: 'low', proneToObesity: true },
-    { name: 'Miniature Schnauzer', idealMin: 5, idealMax: 9, activity: 'moderate', proneToObesity: true },
-    { name: 'Newfoundland', idealMin: 45, idealMax: 70, activity: 'moderate', proneToObesity: true },
-    { name: 'Pembroke Welsh Corgi', idealMin: 10, idealMax: 14, activity: 'moderate', proneToObesity: true },
-    { name: 'Pomeranian', idealMin: 1.5, idealMax: 3.5, activity: 'moderate', proneToObesity: true },
-    { name: 'Poodle (Standard)', idealMin: 20, idealMax: 32, activity: 'moderate', proneToObesity: false },
-    { name: 'Rottweiler', idealMin: 35, idealMax: 60, activity: 'moderate', proneToObesity: true },
-    { name: 'Scottish Terrier', idealMin: 8.5, idealMax: 10.5, activity: 'moderate', proneToObesity: true },
-    { name: 'Shih Tzu', idealMin: 4.5, idealMax: 7.5, activity: 'low', proneToObesity: true },
-    { name: 'Siberian Husky', idealMin: 16, idealMax: 27, activity: 'high', proneToObesity: false },
-    { name: 'Staffordshire Bull Terrier', idealMin: 11, idealMax: 17, activity: 'moderate', proneToObesity: false },
-    { name: 'Vizsla', idealMin: 20, idealMax: 30, activity: 'high', proneToObesity: false },
-    { name: 'Weimaraner', idealMin: 25, idealMax: 41, activity: 'high', proneToObesity: false },
-    { name: 'Whippet', idealMin: 9, idealMax: 18, activity: 'high', proneToObesity: false },
-    { name: 'Yorkshire Terrier', idealMin: 2, idealMax: 3.5, activity: 'moderate', proneToObesity: false }
-  ],
-  cat: [
-    { name: 'Bengal', idealMin: 3.5, idealMax: 7, activity: 'high', proneToObesity: false },
-    { name: 'Domestic Shorthair', idealMin: 3, idealMax: 6, activity: 'moderate', proneToObesity: true },
-    { name: 'Maine Coon', idealMin: 6, idealMax: 9, activity: 'moderate', proneToObesity: false },
-    { name: 'Persian', idealMin: 3, idealMax: 5.5, activity: 'low', proneToObesity: true },
-    { name: 'Siamese', idealMin: 2.5, idealMax: 5.5, activity: 'high', proneToObesity: false }
-  ]
-}
+// Register datalabel plugin globally
+Chart.register(ChartDataLabels);
 
-// Sort breeds alphabetically
-for (const type in breedData) {
-  breedData[type].sort((a, b) => a.name.localeCompare(b.name))
-}
+// Your existing breedData and populateBreeds code here (not repeated for brevity)
 
-const breedSelect = document.getElementById('breed')
-const petTypeSelect = document.getElementById('petType')
-
-function populateBreeds(petType) {
-  breedSelect.innerHTML = ''
-  breedData[petType].forEach(breed => {
-    const opt = document.createElement('option')
-    opt.value = breed.name
-    opt.textContent = breed.name
-    breedSelect.appendChild(opt)
-  })
-}
-
-petTypeSelect.addEventListener('change', () => {
-  populateBreeds(petTypeSelect.value)
-})
-populateBreeds(petTypeSelect.value)
-
-// Main Form Logic
 document.getElementById('petForm').addEventListener('submit', function (e) {
   e.preventDefault()
 
@@ -135,9 +64,9 @@ document.getElementById('petForm').addEventListener('submit', function (e) {
 
   setTimeout(() => {
     const ctx = document.getElementById('macroChart').getContext('2d')
-    if (window.macroChart instanceof Chart) {
-  window.macroChart.destroy()
-}
+    if (window.macroChart && typeof window.macroChart.destroy === 'function') {
+      window.macroChart.destroy()
+    }
 
     window.macroChart = new Chart(ctx, {
       type: 'pie',
