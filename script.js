@@ -76,32 +76,31 @@ document.getElementById('petForm').addEventListener('submit', function (e) {
   }
 
   const mer = rer * multiplier
-  const proteinPercent = petType === 'dog' ? '18–25%' : '26–30%'
-  const fatPercent = petType === 'dog' ? '5.5–15%' : '9–20%'
   const waterMl = Math.round(weight * 55)
 
   // Macronutrient breakdown
-const proteinPct = 0.25
-const fatPct = 0.30
-const carbPct = 0.45
+  const proteinPct = 0.25
+  const fatPct = 0.30
+  const carbPct = 0.45
 
-const proteinCals = mer * proteinPct
-const fatCals = mer * fatPct
-const carbCals = mer * carbPct
+  const proteinCals = mer * proteinPct
+  const fatCals = mer * fatPct
+  const carbCals = mer * carbPct
 
-const proteinGrams = (proteinCals / 4).toFixed(1)
-const fatGrams = (fatCals / 9).toFixed(1)
-const carbGrams = (carbCals / 4).toFixed(1)
+  const proteinGrams = (proteinCals / 4).toFixed(1)
+  const fatGrams = (fatCals / 9).toFixed(1)
+  const carbGrams = (carbCals / 4).toFixed(1)
 
-
-  // Update HTML including the canvas
   document.getElementById('results').innerHTML = `
     <h3>Daily Nutrition Estimate</h3>
     <p><strong>Calories per day:</strong> ${Math.round(mer)} kcal</p>
-    <p><strong>Protein:</strong> ${proteinPercent} of dry matter</p>
-    <p><strong>Fat:</strong> ${fatPercent} of dry matter</p>
-    <p><strong>Feeding Goal:</strong> ${goal.charAt(0).toUpperCase() + goal.slice(1)}</p>
-    <p>This is a general estimate. Always consult your veterinarian for medical advice.</p>
+
+    <p><strong>Macronutrient Breakdown:</strong></p>
+    <ul>
+      <li>Protein: ${Math.round(proteinPct * 100)}% – ${Math.round(proteinCals)} kcal – ${proteinGrams} g</li>
+      <li>Fat: ${Math.round(fatPct * 100)}% – ${Math.round(fatCals)} kcal – ${fatGrams} g</li>
+      <li>Carbohydrates: ${Math.round(carbPct * 100)}% – ${Math.round(carbCals)} kcal – ${carbGrams} g</li>
+    </ul>
 
     <h3>Hydration Recommendation</h3>
     <p><strong>Water per day:</strong> ${waterMl} ml (~${(waterMl / 1000).toFixed(2)} L)</p>
@@ -124,12 +123,6 @@ const carbGrams = (carbCals / 4).toFixed(1)
     <canvas id="macroChart" width="400" height="400"></canvas>
   `
 
-  // Macronutrient calorie estimates
-  const proteinCals = mer * 0.25
-  const fatCals = mer * 0.3
-  const carbCals = mer * 0.45
-
-  // Give DOM time to render <canvas>
   setTimeout(() => {
     const canvas = document.getElementById('macroChart')
     if (!canvas) {
@@ -138,7 +131,6 @@ const carbGrams = (carbCals / 4).toFixed(1)
     }
 
     const ctx = canvas.getContext('2d')
-
     if (window.macroChart instanceof Chart) {
       window.macroChart.destroy()
     }
