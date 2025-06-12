@@ -40,8 +40,7 @@ const breedData = {
   { name: 'Weimaraner', idealMin: 25, idealMax: 41, activity: 'high', proneToObesity: false },
   { name: 'Whippet', idealMin: 9, idealMax: 18, activity: 'high', proneToObesity: false },
   { name: 'Yorkshire Terrier', idealMin: 2, idealMax: 3.5, activity: 'moderate', proneToObesity: false }
-]
-,
+],
   cat: [
     { name: 'Domestic Shorthair', idealMin: 3, idealMax: 6, activity: 'moderate', proneToObesity: true },
     { name: 'Maine Coon', idealMin: 6, idealMax: 9, activity: 'moderate', proneToObesity: false },
