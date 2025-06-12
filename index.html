@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pet Nutrition Calculator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Pet Nutrition Calculator</h1>
+    <form id="petForm">
+      <label>Pet Type:
+        <select id="petType">
+          <option value="dog">Dog</option>
+          <option value="cat">Cat</option>
+        </select>
+      </label>
+
+      <label>Weight (kg):
+        <input type="number" id="weight" required />
+      </label>
+
+      <label>Age (in years):
+        <input type="number" id="age" required />
+      </label>
+
+      <label>Neutered/Spayed?
+        <select id="neutered">
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+        </select>
+      </label>
+
+      <label>Activity Level:
+        <select id="activity">
+          <option value="low">Low</option>
+          <option value="moderate">Moderate</option>
+          <option value="high">High</option>
+        </select>
+      </label>
+
+      <label>Goal:
+        <select id="goal">
+          <option value="maintain">Maintain</option>
+          <option value="lose">Lose Weight</option>
+          <option value="gain">Gain Weight</option>
+        </select>
+      </label>
+
+      <button type="submit">Calculate</button>
+    </form>
+
+    <div id="results"></div>
+
+    <div class="ads">
+      <!-- Ad placeholder -->
+      <p>Advertisement</p>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
