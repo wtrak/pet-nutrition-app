@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Pet Nutrition Calculator</title>
   <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
   <div class="container">
@@ -18,20 +19,19 @@
       </label>
 
       <label>Weight Unit:
-  <select id="weightUnit">
-    <option value="kg" selected>kg</option>
-    <option value="lbs">lbs</option>
-  </select>
-</label>
+        <select id="weightUnit">
+          <option value="kg" selected>kg</option>
+          <option value="lbs">lbs</option>
+        </select>
+      </label>
 
-<label>Weight:
-  <input type="number" id="weight" step="0.1" required />
-</label>
+      <label>Weight:
+        <input type="number" id="weight" step="0.1" required />
+      </label>
 
-
-<label>Breed:
-  <select id="breed"></select>
-</label>
+      <label>Breed:
+        <select id="breed"></select>
+      </label>
 
       <label>Age (in years):
         <input type="number" id="age" required />
@@ -64,6 +64,7 @@
     </form>
 
     <div id="results"></div>
+    <canvas id="macroChart" width="400" height="400"></canvas>
 
     <div class="ads">
       <!-- Ad placeholder -->
