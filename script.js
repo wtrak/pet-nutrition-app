@@ -91,16 +91,6 @@ document.getElementById('petForm').addEventListener('submit', function (e) {
   const fatGrams = (fatCals / 9).toFixed(1)
   const carbGrams = (carbCals / 4).toFixed(1)
 
-  // Convert breed ideal weight to lbs if needed
-  let idealMin = breedInfo.idealMin
-  let idealMax = breedInfo.idealMax
-  let weightLabel = 'kg'
-  if (weightUnit === 'lbs') {
-    idealMin = (idealMin * 2.20462).toFixed(1)
-    idealMax = (idealMax * 2.20462).toFixed(1)
-    weightLabel = 'lbs'
-  }
-
   document.getElementById('results').innerHTML = `
     <h3>Daily Nutrition Estimate</h3>
     <p><strong>Calories per day:</strong> ${Math.round(mer)} kcal</p>
@@ -134,7 +124,7 @@ document.getElementById('petForm').addEventListener('submit', function (e) {
 
     <h3>Breed Info</h3>
     <p><strong>Breed:</strong> ${breedInfo.name}</p>
-    <p><strong>Ideal Weight:</strong> ${idealMin}–${idealMax} ${weightLabel}</p>
+    <p><strong>Ideal Weight:</strong> ${breedInfo.idealMin}–${breedInfo.idealMax} kg</p>
     ${breedInfo.proneToObesity ? '<p style="color:red"><strong>Note:</strong> This breed is prone to obesity. Monitor weight closely.</p>' : ''}
   `
 
