@@ -80,6 +80,7 @@ document.getElementById('petForm').addEventListener('submit', function (e) {
   const fatPercent = petType === 'dog' ? '5.5–15%' : '9–20%'
   const waterMl = Math.round(weight * 55)
 
+  // Update HTML including the canvas
   document.getElementById('results').innerHTML = `
     <h3>Daily Nutrition Estimate</h3>
     <p><strong>Calories per day:</strong> ${Math.round(mer)} kcal</p>
@@ -105,37 +106,47 @@ document.getElementById('petForm').addEventListener('submit', function (e) {
     <p><strong>Breed:</strong> ${breedInfo.name}</p>
     <p><strong>Ideal Weight:</strong> ${breedInfo.idealMin}–${breedInfo.idealMax} kg</p>
     ${breedInfo.proneToObesity ? '<p style="color:red"><strong>Note:</strong> This breed is prone to obesity. Monitor weight closely.</p>' : ''}
+
+    <canvas id="macroChart" width="400" height="400"></canvas>
   `
 
-// Estimate macros from total calories (MER)
-const proteinCals = mer * 0.25
-const fatCals = mer * 0.3
-const carbCals = mer * 0.45
+  // Macronutrient calorie estimates
+  const proteinCals = mer * 0.25
+  const fatCals = mer * 0.3
+  const carbCals = mer * 0.45
 
-setTimeout(() => {
-  const ctx = document.getElementById('macroChart').getContext('2d')
-  if (window.macroChart) {
-    window.macroChart.destroy()
-  }
+  // Give DOM time to render <canvas>
+  setTimeout(() => {
+    const canvas = document.getElementById('macroChart')
+    if (!canvas) {
+      console.warn("Canvas not found — chart not rendered.")
+      return
+    }
 
-  window.macroChart = new Chart(ctx, {
-    type: 'pie',
-    data: {
-      labels: ['Protein', 'Fat', 'Carbohydrates'],
-      datasets: [{
-        data: [proteinCals, fatCals, carbCals],
-        backgroundColor: ['#4CAF50', '#FF9800', '#03A9F4']
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        title: {
-          display: true,
-          text: 'Estimated Caloric Breakdown'
+    const ctx = canvas.getContext('2d')
+
+    if (window.macroChart instanceof Chart) {
+      window.macroChart.destroy()
+    }
+
+    window.macroChart = new Chart(ctx, {
+      type: 'pie',
+      data: {
+        labels: ['Protein', 'Fat', 'Carbohydrates'],
+        datasets: [{
+          data: [proteinCals, fatCals, carbCals],
+          backgroundColor: ['#4CAF50', '#FF9800', '#03A9F4']
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          title: {
+            display: true,
+            text: 'Estimated Caloric Breakdown'
+          }
         }
       }
-    }
-  })
-}, 100)
-
+    })
+  }, 100)
+})
