@@ -80,6 +80,20 @@ document.getElementById('petForm').addEventListener('submit', function (e) {
   const fatPercent = petType === 'dog' ? '5.5–15%' : '9–20%'
   const waterMl = Math.round(weight * 55)
 
+  // Macronutrient breakdown
+const proteinPct = 0.25
+const fatPct = 0.30
+const carbPct = 0.45
+
+const proteinCals = mer * proteinPct
+const fatCals = mer * fatPct
+const carbCals = mer * carbPct
+
+const proteinGrams = (proteinCals / 4).toFixed(1)
+const fatGrams = (fatCals / 9).toFixed(1)
+const carbGrams = (carbCals / 4).toFixed(1)
+
+
   // Update HTML including the canvas
   document.getElementById('results').innerHTML = `
     <h3>Daily Nutrition Estimate</h3>
