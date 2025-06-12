@@ -44,17 +44,13 @@ document.getElementById('petForm').addEventListener('submit', function (e) {
   const goal = document.getElementById('goal').value
   const breedName = document.getElementById('breed').value
 
-  // Convert lbs to kg if necessary
   if (weightUnit === 'lbs') {
     weight = weight / 2.20462
   }
 
-  // RER = 70 × (weight^0.75)
   const rer = 70 * Math.pow(weight, 0.75)
 
-  // Default multiplier
   let multiplier = 1.0
-
   if (petType === 'dog') {
     if (goal === 'lose') multiplier = 1.0
     else if (goal === 'gain') multiplier = 2.0
@@ -73,7 +69,6 @@ document.getElementById('petForm').addEventListener('submit', function (e) {
     }
   }
 
-  // Breed modifier
   const breedInfo = breedData[petType].find(b => b.name === breedName)
   if (breedInfo) {
     if (breedInfo.activity === 'low') multiplier -= 0.1
@@ -81,7 +76,6 @@ document.getElementById('petForm').addEventListener('submit', function (e) {
   }
 
   const mer = rer * multiplier
-
   const proteinPercent = petType === 'dog' ? '18–25%' : '26–30%'
   const fatPercent = petType === 'dog' ? '5.5–15%' : '9–20%'
   const waterMl = Math.round(weight * 55)
@@ -112,4 +106,33 @@ document.getElementById('petForm').addEventListener('submit', function (e) {
     <p><strong>Ideal Weight:</strong> ${breedInfo.idealMin}–${breedInfo.idealMax} kg</p>
     ${breedInfo.proneToObesity ? '<p style="color:red"><strong>Note:</strong> This breed is prone to obesity. Monitor weight closely.</p>' : ''}
   `
+
+  // PIE CHART: Macronutrient breakdown (as calorie estimate)
+  const proteinCals = mer * 0.25
+  const fatCals = mer * 0.3
+  const carbCals = mer * 0.45
+
+  const ctx = document.getElementById('macroChart').getContext('2d')
+  if (window.macroChart) {
+    window.macroChart.destroy()
+  }
+  window.macroChart = new Chart(ctx, {
+    type: 'pie',
+    data: {
+      labels: ['Protein', 'Fat', 'Carbohydrates'],
+      datasets: [{
+        data: [proteinCals, fatCals, carbCals],
+        backgroundColor: ['#4CAF50', '#FF9800', '#03A9F4']
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        title: {
+          display: true,
+          text: 'Estimated Caloric Breakdown'
+        }
+      }
+    }
+  })
 })
