@@ -107,15 +107,17 @@ document.getElementById('petForm').addEventListener('submit', function (e) {
     ${breedInfo.proneToObesity ? '<p style="color:red"><strong>Note:</strong> This breed is prone to obesity. Monitor weight closely.</p>' : ''}
   `
 
-  // PIE CHART: Macronutrient breakdown (as calorie estimate)
-  const proteinCals = mer * 0.25
-  const fatCals = mer * 0.3
-  const carbCals = mer * 0.45
+// Estimate macros from total calories (MER)
+const proteinCals = mer * 0.25
+const fatCals = mer * 0.3
+const carbCals = mer * 0.45
 
+setTimeout(() => {
   const ctx = document.getElementById('macroChart').getContext('2d')
   if (window.macroChart) {
     window.macroChart.destroy()
   }
+
   window.macroChart = new Chart(ctx, {
     type: 'pie',
     data: {
@@ -135,4 +137,5 @@ document.getElementById('petForm').addEventListener('submit', function (e) {
       }
     }
   })
-})
+}, 100)
+
