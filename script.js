@@ -95,12 +95,19 @@ document.getElementById('petForm').addEventListener('submit', function (e) {
     <h3>Daily Nutrition Estimate</h3>
     <p><strong>Calories per day:</strong> ${Math.round(mer)} kcal</p>
 
-    <p><strong>Macronutrient Breakdown:</strong></p>
-    <ul>
-      <li>Protein: ${Math.round(proteinPct * 100)}% – ${Math.round(proteinCals)} kcal – ${proteinGrams} g</li>
-      <li>Fat: ${Math.round(fatPct * 100)}% – ${Math.round(fatCals)} kcal – ${fatGrams} g</li>
-      <li>Carbohydrates: ${Math.round(carbPct * 100)}% – ${Math.round(carbCals)} kcal – ${carbGrams} g</li>
-    </ul>
+    <div class="macro-summary">
+      <div class="macro-info">
+        <p><strong>Macronutrient Breakdown:</strong></p>
+        <ul>
+          <li>Protein: ${Math.round(proteinPct * 100)}% – ${Math.round(proteinCals)} kcal – ${proteinGrams} g</li>
+          <li>Fat: ${Math.round(fatPct * 100)}% – ${Math.round(fatCals)} kcal – ${fatGrams} g</li>
+          <li>Carbohydrates: ${Math.round(carbPct * 100)}% – ${Math.round(carbCals)} kcal – ${carbGrams} g</li>
+        </ul>
+      </div>
+      <div class="macro-chart">
+        <canvas id="macroChart" width="300" height="300"></canvas>
+      </div>
+    </div>
 
     <h3>Hydration Recommendation</h3>
     <p><strong>Water per day:</strong> ${waterMl} ml (~${(waterMl / 1000).toFixed(2)} L)</p>
@@ -119,18 +126,13 @@ document.getElementById('petForm').addEventListener('submit', function (e) {
     <p><strong>Breed:</strong> ${breedInfo.name}</p>
     <p><strong>Ideal Weight:</strong> ${breedInfo.idealMin}–${breedInfo.idealMax} kg</p>
     ${breedInfo.proneToObesity ? '<p style="color:red"><strong>Note:</strong> This breed is prone to obesity. Monitor weight closely.</p>' : ''}
-
-    <canvas id="macroChart" width="400" height="400"></canvas>
   `
 
   setTimeout(() => {
     const canvas = document.getElementById('macroChart')
-    if (!canvas) {
-      console.warn("Canvas not found — chart not rendered.")
-      return
-    }
-
+    if (!canvas) return
     const ctx = canvas.getContext('2d')
+
     if (window.macroChart instanceof Chart) {
       window.macroChart.destroy()
     }
@@ -141,7 +143,7 @@ document.getElementById('petForm').addEventListener('submit', function (e) {
         labels: ['Protein', 'Fat', 'Carbohydrates'],
         datasets: [{
           data: [proteinCals, fatCals, carbCals],
-          backgroundColor: ['#4CAF50', '#FF9800', '#03A9F4']
+          backgroundColor: ['#a088f7', '#8ad0f5', '#66bfa4']
         }]
       },
       options: {
@@ -149,10 +151,26 @@ document.getElementById('petForm').addEventListener('submit', function (e) {
         plugins: {
           title: {
             display: true,
-            text: 'Estimated Caloric Breakdown'
+            text: 'Estimated Macronutrient Breakdown'
+          },
+          datalabels: {
+            color: '#000',
+            font: {
+              weight: 'bold'
+            },
+            formatter: (value, context) => {
+              const label = context.chart.data.labels[context.dataIndex]
+              const percent = ((value / mer) * 100).toFixed(1)
+              let grams
+              if (label === 'Protein') grams = (value / 4).toFixed(1)
+              else if (label === 'Fat') grams = (value / 9).toFixed(1)
+              else grams = (value / 4).toFixed(1)
+              return `${label}\n${percent}%\n${grams}g`
+            }
           }
         }
-      }
+      },
+      plugins: [ChartDataLabels]
     })
   }, 100)
 })
